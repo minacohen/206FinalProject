@@ -69,11 +69,6 @@ def scrape_data(soup):
 # scrape data from api 
 billboard_obj = scrape_data(soup)
 
-# write cache to file
-f = open('billboard_data_cache.json','w')
-f.write(json.dumps(billboard_obj))
-f.close()
-
 # make sqlite database
 def make_database(db):
     conn = sqlite3.connect(db)
@@ -120,78 +115,82 @@ cur=conn.cursor()
 postmalone = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Post Malone'"):
     postmalone.append(song)
-print(len(postmalone))
+    song_length_post = len(song)
 
 billieeilish = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Billie Eilish'"):
     billieeilish.append(song)
-print(len(billieeilish))
+    song_length_billie = len(song)
 
 jasonaldean = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Jason Aldean'"):
     jasonaldean.append(song)
-print(len(jasonaldean))
+    song_length_jason = len(song)
 
 taylorswift = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Taylor Swift'"):
     taylorswift.append(song)
-print(len(taylorswift))
+    song_length_taylor = len(song)
 
 lizzo = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Lizzo'"):
     lizzo.append(song)
-print(len(lizzo))
+    song_length_lizzo = len(song)
 
 lukecombs = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Luke Combs'"):
     lukecombs.append(song)
-print(len(lukecombs))
+    song_length_luke = len(song)
 
 dababy = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'DaBaby'"):
     dababy.append(song)
-print(len(dababy))
+    song_length_dababy = len(song)
 
 trippieredd = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Trippie Redd'"):
     trippieredd.append(song)
-print(len(trippieredd))
+    song_length_trippie = len(song)
 
 coldplay = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Coldplay'"):
     coldplay.append(song)
-print(len(coldplay))
+    song_length_coldplay = len(song)
 
 khalid = []
 for song in cur.execute("SELECT song FROM Billboard WHERE artist = 'Khalid'"):
     khalid.append(song)
-print(len(khalid))
-
-a = 'Post Malone'
-b = 'Billie Eilish'
-c = 'Jason Aldean'
-d = 'Taylor Swift'
-e = 'Lizzo'
-f = 'Luke Combs'
-g = 'DaBaby'
-h = 'Trippie Redd'
-i = 'Coldplay'
-j = 'Khalid'
+    song_length_khalid = len(song)
 
 dic = {}
-dic[a] = postmalone
-dic[b] = billieeilish
-dic[c] = jasonaldean
-dic[d] = taylorswift
-dic[e] = lizzo
-dic[f] = lukecombs
-dic[g] = dababy
-dic[h] = trippieredd
-dic[i] = coldplay
-dic[j] = khalid
+dic['Post Malone'] = postmalone
+dic['Billie Eilish'] = billieeilish
+dic['Jason Aldean'] = jasonaldean
+dic['Taylor Swift'] = taylorswift
+dic['Lizzo'] = lizzo
+dic['Luke Combs'] = lukecombs
+dic['DaBaby'] = dababy
+dic['Trippie Redd'] = trippieredd
+dic['Coldplay'] = coldplay
+dic['Khalid'] = khalid
 
-z = open('top_10_artists.json','w')
-z.write(json.dumps(dic))
+# write length of song calculation to text file
+billboard_obj["Post Malone"] = song_length_post
+billboard_obj['Billie Eilish'] = song_length_billie
+billboard_obj['Jason Aldean'] = song_length_jason
+billboard_obj['Taylor Swift'] = song_length_taylor
+billboard_obj['Lizzo'] = song_length_lizzo
+billboard_obj['Luke Combs'] = song_length_luke
+billboard_obj['DaBaby'] = song_length_dababy
+billboard_obj['Trippie Redd'] = song_length_trippie
+billboard_obj['Coldplay'] = song_length_coldplay
+billboard_obj['Khalid'] = song_length_khalid
+
+
+# write to file as text
+full_path = os.path.dirname(os.path.realpath(__file__)) + '/' + 'billboard_cache.json'
+with open(full_path, 'w') as fp:
+    fp.write(json.dumps(billboard_obj))
 
 # make bar chart
 
