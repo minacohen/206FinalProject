@@ -96,9 +96,9 @@ query = "SELECT * FROM songs"
 cur.execute(query)
 results = cur.fetchall()
 
-if len(results) == 0:
+if len(results) == 20:
 
-    # when there are 0 rows in the table, this inserts the data from API to sqLite
+    # insert data 20 items at a time
     cur.executemany("INSERT INTO artists (id, name) VALUES (:index, :artist);", artists_list)
     cur.executemany("INSERT INTO songs (name, artist_id, rank, streams) VALUES (:song, :artist, :rank, :streams);", songs)
     conn.commit()
